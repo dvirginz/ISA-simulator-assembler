@@ -1,0 +1,15 @@
+bne $zero, $t0, $t1, L1 # if ($t0 != $t1) goto L1
+limm $t1, $zero, $zero, 0x1 # $t1 = 1
+add $t2, $t2, $t1, 0 # $t2 = $t2 + $t1
+beq $zero, $zero, $zero, L2 # unconditional jump to L2
+L1:
+sub $t2, $t2, $t1, 0 # $t2 = $t2 – $t1
+L2:
+limm $t1, $zero, $zero, L3 # $t1 = address of L3
+jr $t1, $zero, $zero, 0 # jump to the address specified in t1
+L3:
+jal $zero, $zero, $zero, L4 # function call L4, save return addr in $ra
+halt # exit simulator
+word 50 12
+L4:
+jr $ra, $zero, $zero, 0 # return from function in address in $ra
